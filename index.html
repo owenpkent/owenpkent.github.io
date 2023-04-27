@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My first Three.js app</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script src="https://threejs.org/build/three.js"></script>
+<script>
+    var scene, camera, renderer, geometry, material, mesh;
+
+    // Initialize scene, camera, and renderer
+    function init() {
+        scene = new THREE.Scene();
+
+        // Create a perspective camera
+        camera = new THREE.PerspectiveCamera(
+            75, 
+            window.innerWidth / window.innerHeight, 
+            0.1, 
+            1000
+        );
+        camera.position.z = 5;
+
+        // Create a WebGL renderer
+        renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Add a cube to the scene
+        geometry = new THREE.BoxGeometry(1, 1, 1);
+        material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+        mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        // Add an orbit control which allows us to move around the scene
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    }
+
+    // Render the scene
+    function animate() {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    }
+
+    // Run the functions
+    init();
+    animate();
+</script>
+</body>
+</html>
